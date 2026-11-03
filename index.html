@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>The Royal Wedding | Muhammad Sadiq & Arooj Saher</title>
+  <title>The Royal Union | Muhammad Sadiq & Arooj Saher</title>
 
-  <!-- Google Fonts & Confetti CDN -->
+  <!-- Luxury Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Alex+Brush&family=Montserrat:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --dusty-pink: #d99aa7;
-      --envelope-dark: #b87585;
-      --envelope-shadow: #8a4857;
-      --deep-burgundy: #6e1c2e;
-      --card-bg: #faf4f5;
-      --gold-seal: linear-gradient(135deg, #ffe082 0%, #c59b27 50%, #7e5a0b 100%);
-      --text-dark: #382428;
-      --text-muted: #786267;
+      --bg-midnight: #13060d;
+      --plum-velvet: #280b1b;
+      --plum-card: rgba(46, 14, 32, 0.7);
+      --gold-primary: #f5d77f;
+      --gold-dark: #b8861d;
+      --gold-foil: linear-gradient(135deg, #ffe9a6 0%, #d4af37 45%, #926a10 80%, #ffd875 100%);
+      --text-gold: #fceec5;
+      --text-ivory: #fcf4f6;
+      --text-muted: #c9adb6;
+      --border-gold: rgba(245, 215, 127, 0.35);
     }
 
     * {
@@ -31,70 +33,81 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      background: #18090e;
+    body {
+      background: radial-gradient(circle at 50% 30%, #200816 0%, #0c0207 100%);
       font-family: 'Montserrat', sans-serif;
-      color: var(--text-dark);
+      color: var(--text-ivory);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
     }
 
-    /* Fixed Canvas for Continuous Background Petals */
-    #ambientPetalsCanvas {
+    /* Ambient Gold Stardust & Petal Canvas */
+    #ambientCosmicCanvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 40;
+      z-index: 10;
     }
 
-    /* Responsive Mobile Frame */
-    .app-container {
+    /* Luxury Viewport Phone Container */
+    .imperial-stage {
       width: 100%;
       max-width: 440px;
       min-height: 100vh;
-      background: var(--card-bg);
+      background: linear-gradient(180deg, #180712 0%, #240a1b 50%, #150510 100%);
       position: relative;
-      box-shadow: 0 0 60px rgba(0,0,0,0.85);
+      box-shadow: 0 0 70px rgba(0,0,0,0.9), 0 0 15px rgba(212, 175, 55, 0.15);
+      border-left: 1px solid rgba(245, 215, 127, 0.15);
+      border-right: 1px solid rgba(245, 215, 127, 0.15);
       overflow-x: hidden;
+      z-index: 20;
     }
 
-    /* Floating Speaker/Music Button */
-    .speaker-btn {
+    /* Floating Royal Sound Controller */
+    .royal-audio-toggle {
       position: fixed;
-      top: 16px;
+      top: 18px;
       right: calc(50% - 200px);
       z-index: 999;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(217, 154, 167, 0.6);
+      width: 42px;
+      height: 42px;
+      background: rgba(30, 9, 22, 0.85);
+      border: 1.5px solid var(--border-gold);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--deep-burgundy);
+      color: var(--gold-primary);
       font-size: 15px;
       cursor: pointer;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
       transition: all 0.3s ease;
     }
 
     @media (max-width: 450px) {
-      .speaker-btn { right: 16px; }
+      .royal-audio-toggle { right: 18px; }
     }
 
-    /* =======================================================
-       1. ENVELOPE FULLSCREEN OVERLAY (0:00 - 0:04 IN VIDEO)
-       ======================================================= */
-    #envelope-screen {
+    .royal-audio-toggle.active {
+      animation: vinylSpin 7s linear infinite;
+      box-shadow: 0 0 18px rgba(245, 215, 127, 0.5);
+    }
+
+    @keyframes vinylSpin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* =========================================================
+       1. 3D NOCTURNE IMPERIAL VELVET ENVELOPE (FIRST SCREEN)
+       ========================================================= */
+    #imperial-envelope-screen {
       position: fixed;
       top: 0;
       left: 50%;
@@ -102,130 +115,126 @@
       width: 100%;
       max-width: 440px;
       height: 100vh;
-      background: #edd6dc url('https://www.transparenttextures.com/patterns/damask.png');
+      background: radial-gradient(circle at center, #2e0c1f 0%, #12040c 100%);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      transition: opacity 0.7s ease 0.9s, visibility 0.7s ease 0.9s;
+      transition: opacity 0.85s ease 0.9s, visibility 0.85s ease 0.9s;
     }
 
-    #envelope-screen.opened {
+    #imperial-envelope-screen.dismissed {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
 
-    .envelope-pocket {
+    .velvet-envelope-body {
       position: relative;
-      width: 320px;
-      height: 230px;
-      background: var(--dusty-pink) url('https://www.transparenttextures.com/patterns/damask.png');
+      width: 326px;
+      height: 236px;
+      background: linear-gradient(145deg, #3d1229, #220917);
       border-radius: 12px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-      perspective: 1000px;
+      border: 1.5px solid rgba(245, 215, 127, 0.35);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.65), inset 0 0 35px rgba(0,0,0,0.4);
+      perspective: 1200px;
     }
 
-    .flap-triangle {
+    /* Top Flap */
+    .velvet-flap-top {
       position: absolute;
       top: 0;
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 130px solid var(--envelope-dark);
+      border-left: 163px solid transparent;
+      border-right: 163px solid transparent;
+      border-top: 130px solid #4a1532;
       transform-origin: top;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 8;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
     }
 
-    #envelope-screen.unseal .flap-triangle {
+    #imperial-envelope-screen.opened .velvet-flap-top {
       transform: rotateX(180deg);
       z-index: 1;
     }
 
-    .pocket-triangles {
+    .velvet-pocket-bottom {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid var(--dusty-pink);
-      border-right: 160px solid var(--dusty-pink);
-      border-bottom: 125px solid var(--envelope-shadow);
+      border-left: 163px solid #330e22;
+      border-right: 163px solid #330e22;
+      border-bottom: 125px solid #200715;
       border-radius: 0 0 12px 12px;
       z-index: 5;
       pointer-events: none;
     }
 
-    .golden-wax-seal {
+    /* Metallic 3D Monogrammed Wax Seal */
+    .imperial-seal-btn {
       position: absolute;
-      top: 98px;
+      top: 100px;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 86px;
-      height: 86px;
-      background: var(--gold-seal);
+      width: 90px;
+      height: 90px;
+      background: var(--gold-foil);
       border-radius: 50%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 2px 6px rgba(255,255,255,0.7);
-      border: 2px dashed rgba(255, 255, 255, 0.45);
-      z-index: 20;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 2px 8px rgba(255,255,255,0.8);
+      border: 2px dashed rgba(255, 255, 255, 0.5);
+      z-index: 25;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: sealGlow 2.2s infinite ease-in-out;
+      animation: sealPulse 2.4s infinite ease-in-out;
       transition: all 0.4s ease;
     }
 
-    @keyframes sealGlow {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 14px 35px rgba(197, 155, 39, 0.65); }
+    @keyframes sealPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+      50% { transform: translate(-50%, -50%) scale(1.07); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6); }
     }
 
-    #envelope-screen.unseal .golden-wax-seal {
+    #imperial-envelope-screen.opened .imperial-seal-btn {
       transform: translate(-50%, -50%) scale(0.2);
       opacity: 0;
       pointer-events: none;
     }
 
-    .seal-txt-top {
+    .seal-monogram-top {
       font-size: 8px;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       font-weight: 700;
+      color: #492e00;
+    }
+
+    .seal-monogram-center {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 21px;
+      font-weight: 900;
       color: #3b2300;
+      letter-spacing: 1px;
     }
 
-    .seal-txt-main {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
-      font-weight: 800;
-      color: #311c00;
-    }
-
-    .envelope-caption {
-      margin-top: 45px;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--deep-burgundy);
-      font-weight: 700;
-    }
-
-    /* Soft Subtle Shimmer (Aankhon ko chubhe bina) */
-    .burst-flare {
+    /* Soft Warm Shimmer Glow */
+    .soft-aurora-glow {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(255, 235, 160, 0.45) 0%, rgba(212, 175, 55, 0.15) 50%, transparent 70%);
+      width: 130px;
+      height: 130px;
+      background: radial-gradient(circle, rgba(255, 235, 160, 0.45) 0%, rgba(212, 175, 55, 0.15) 55%, transparent 75%);
       border-radius: 50%;
       pointer-events: none;
       z-index: 15;
@@ -233,173 +242,178 @@
       transition: transform 0.45s ease-out, opacity 0.4s ease-out;
     }
 
-    #envelope-screen.unseal .burst-flare {
-      transform: translate(-50%, -50%) scale(1.4);
+    #imperial-envelope-screen.opened .soft-aurora-glow {
+      transform: translate(-50%, -50%) scale(1.5);
       opacity: 0.6;
-      animation: fadeOutShimmer 0.4s ease-out forwards 0.15s;
     }
 
-    @keyframes fadeOutShimmer {
-      0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.4); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
+    .envelope-invitation-subtext {
+      margin-top: 50px;
+      font-family: 'Cinzel', serif;
+      font-size: 11.5px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      font-weight: 600;
     }
 
-    /* =======================================================
-       2. CINEMATIC HERO ARCH PORTAL (0:05 - 0:09 IN VIDEO)
-       ======================================================= */
-    .hero-arch-section {
+    /* =========================================================
+       2. IMPERIAL GLASS ARCH PORTAL (HERO VIEW)
+       ======================================================== */
+    .imperial-hero-portal {
       width: 100%;
-      min-height: 95vh;
-      background: linear-gradient(180deg, rgba(16, 7, 11, 0.45) 0%, rgba(42, 12, 22, 0.92) 100%), 
+      min-height: 96vh;
+      background: linear-gradient(180deg, rgba(19, 6, 13, 0.5) 0%, rgba(36, 10, 27, 0.95) 100%),
                   url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 45px 20px 35px 20px;
-      color: #ffffff;
+      padding: 50px 20px 40px 20px;
       position: relative;
     }
 
-    .royal-arch-glass {
+    .crystal-arch-portal {
       width: 100%;
-      border-radius: 200px 200px 22px 22px;
-      padding: 42px 18px 35px 18px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1.5px solid rgba(255, 235, 170, 0.4);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border-radius: 220px 220px 24px 24px;
+      padding: 44px 20px 38px 20px;
+      background: rgba(30, 9, 22, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid var(--border-gold);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65), inset 0 0 30px rgba(245, 215, 127, 0.08);
     }
 
-    .bismillah {
+    .bismillah-script {
       font-family: 'Noto Nastaliq Urdu', serif;
-      font-size: 21px;
-      color: #ffeaa7;
+      font-size: 23px;
+      color: var(--gold-primary);
       line-height: 2.2;
     }
 
-    .ayah {
+    .quran-ayah {
       font-size: 11px;
       font-style: italic;
-      color: #edd5da;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      letter-spacing: 0.5px;
+    }
+
+    .grandfather-blessing-seal {
+      display: inline-block;
+      border: 1px dashed var(--gold-primary);
+      padding: 6px 18px;
+      border-radius: 30px;
+      background: rgba(0, 0, 0, 0.35);
       margin-bottom: 18px;
     }
 
-    .nana-badge {
-      display: inline-block;
-      border: 1px dashed rgba(255, 235, 170, 0.5);
-      padding: 5px 16px;
-      border-radius: 20px;
-      background: rgba(0, 0, 0, 0.25);
-      margin-bottom: 16px;
-    }
-
-    .nana-badge small {
+    .grandfather-blessing-seal small {
       font-size: 9px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #ffd885;
+      color: var(--gold-primary);
       display: block;
     }
 
-    .nana-badge span {
-      font-family: 'Cormorant Garamond', serif;
+    .grandfather-blessing-seal span {
+      font-family: 'Cinzel', serif;
       font-size: 16px;
       color: #ffffff;
       font-weight: 700;
     }
 
-    .parents-line {
-      font-size: 11.5px;
+    .parents-proclamation {
+      font-size: 12px;
       letter-spacing: 1px;
-      color: #edd9dd;
-      line-height: 1.5;
+      color: var(--text-ivory);
+      line-height: 1.6;
     }
 
-    .parents-name {
-      font-family: 'Cormorant Garamond', serif;
+    .parents-honored-names {
+      font-family: 'Cinzel', serif;
       font-size: 19px;
       font-weight: 700;
-      color: #ffeaa7;
-      margin: 6px 0 16px 0;
+      color: var(--gold-primary);
+      margin: 8px 0 16px 0;
     }
 
-    .couple-names-wrap {
-      margin: 18px 0 10px 0;
+    .couple-grand-presentation {
+      margin: 22px 0 10px 0;
     }
 
-    .couple-name {
-      font-family: 'Great Vibes', cursive;
-      font-size: 46px;
+    .couple-title-name {
+      font-family: 'Alex Brush', cursive;
+      font-size: 48px;
       color: #ffffff;
       line-height: 1.1;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.7);
+      text-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 0 20px rgba(245, 215, 127, 0.3);
     }
 
-    .couple-and {
-      font-family: 'Cormorant Garamond', serif;
+    .couple-monogram-symbol {
+      font-family: 'Cinzel', serif;
       font-size: 18px;
-      color: #ffeaa7;
-      margin: 4px 0;
+      color: var(--gold-primary);
+      margin: 6px 0;
     }
 
-    .scroll-down-hint {
-      margin-top: 35px;
+    .bouncing-scroll-guide {
+      margin-top: 36px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      font-family: 'Cinzel', serif;
       font-size: 9.5px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #ffd885;
-      animation: bounceHint 2s infinite;
+      color: var(--gold-primary);
+      animation: gentleBounce 2.2s infinite;
     }
 
-    @keyframes bounceHint {
+    @keyframes gentleBounce {
       0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(7px); }
-      60% { transform: translateY(3px); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(4px); }
     }
 
-    /* =======================================================
-       3. EXACT HEART SHAPED SCRATCH (CENTERED TEXT FIX)
-       ======================================================= */
-    .content-stream {
-      padding: 30px 18px 80px 18px;
+    /* =========================================================
+       3. EXACT DIAMOND-HEART SCRATCH (OPTICAL CENTER FIXED)
+       ========================================================= */
+    .imperial-content-body {
+      padding: 35px 20px 80px 20px;
       position: relative;
-      z-index: 50;
+      z-index: 30;
     }
 
-    .scratch-section-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 26px 18px;
+    .diamond-scratch-card {
+      background: rgba(36, 12, 27, 0.85);
+      border-radius: 24px;
+      padding: 28px 20px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-      margin-bottom: 28px;
-      border: 1px solid rgba(217, 154, 167, 0.35);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+      margin-bottom: 30px;
     }
 
-    .scratch-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      letter-spacing: 2px;
-      color: var(--deep-burgundy);
+    .scratch-card-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      letter-spacing: 2.5px;
+      color: var(--gold-primary);
       text-transform: uppercase;
-      margin-bottom: 6px;
       font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .scratch-subtitle {
-      font-size: 11px;
+    .scratch-card-prompt {
+      font-size: 11.5px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
-    /* Heart Container with SVG Path Clip */
+    /* Perfect Heart Viewport via SVG Clip-Path */
     .heart-scratch-viewport {
       position: relative;
       width: 220px;
@@ -410,12 +424,12 @@
       justify-content: center;
       clip-path: url(#heartClip);
       -webkit-clip-path: url(#heartClip);
-      background: #fff8f9;
-      box-shadow: 0 8px 25px rgba(217, 154, 167, 0.3);
+      background: #fff9fa;
+      box-shadow: 0 0 25px rgba(245, 215, 127, 0.4);
     }
 
-    /* Revealed Layer - Vertically and Horizontally Centered */
-    .date-revealed-layer {
+    /* Revealed Layer with Precise Vertical Optical Balance */
+    .revealed-heart-core {
       position: absolute;
       top: 0;
       left: 0;
@@ -425,30 +439,31 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 0 20px 20px 20px;
+      padding: 0 20px 22px 20px;
       text-align: center;
       box-sizing: border-box;
+      background: #fff8f9;
     }
 
-    .date-revealed-layer i {
+    .revealed-heart-core i {
       color: var(--deep-burgundy);
-      font-size: 20px;
+      font-size: 22px;
       margin-bottom: 4px;
     }
 
-    .date-revealed-layer h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 17px;
-      color: var(--deep-burgundy);
-      font-weight: 700;
+    .revealed-heart-core h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: #641123;
+      font-weight: 800;
       line-height: 1.2;
     }
 
-    .date-revealed-layer p {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-top: 3px;
+    .revealed-heart-core p {
+      font-size: 12.5px;
+      color: #4b363b;
+      font-weight: 700;
+      margin-top: 4px;
     }
 
     #scratchCanvas {
@@ -462,177 +477,203 @@
       touch-action: none;
     }
 
-    /* =======================================================
-       4. COUNTDOWN, TIMELINE & RSVP (0:14 - 0:23 IN VIDEO)
-       ======================================================= */
-    .countdown-card {
-      margin: 25px 0 35px 0;
+    /* =========================================================
+       4. LIVE COUNTDOWN CAPSULES
+       ========================================================= */
+    .countdown-section-wrapper {
+      margin: 30px 0 40px 0;
       text-align: center;
     }
 
-    .countdown-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+    .countdown-header-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
       letter-spacing: 2px;
-      color: var(--deep-burgundy);
+      color: var(--gold-primary);
       text-transform: uppercase;
-      margin-bottom: 14px;
       font-weight: 700;
+      margin-bottom: 14px;
     }
 
-    .countdown-grid {
+    .countdown-capsules-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
 
-    .countdown-tile {
-      background: #ffffff;
-      border: 1px solid rgba(217, 154, 167, 0.4);
-      border-radius: 12px;
-      padding: 12px 4px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    .countdown-capsule {
+      background: rgba(30, 9, 22, 0.7);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 14px 4px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
 
-    .countdown-num {
-      font-family: 'Cormorant Garamond', serif;
+    .countdown-digit {
+      font-family: 'Cinzel', serif;
       font-size: 22px;
       font-weight: 700;
-      color: var(--deep-burgundy);
+      color: var(--gold-primary);
     }
 
-    .countdown-lbl {
+    .countdown-unit-tag {
       font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--text-muted);
-      margin-top: 2px;
-      font-weight: 600;
+      margin-top: 3px;
     }
 
-    .timeline-title {
-      font-family: 'Cormorant Garamond', serif;
+    /* =========================================================
+       5. PROGRAM TIMELINE & GOOGLE CALENDAR SYNC
+       ========================================================= */
+    .timeline-grand-heading {
+      font-family: 'Cinzel', serif;
       font-size: 18px;
-      letter-spacing: 2.5px;
-      color: var(--deep-burgundy);
+      letter-spacing: 3px;
+      color: var(--gold-primary);
       text-align: center;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       font-weight: 700;
     }
 
-    .event-card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(217, 154, 167, 0.35);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+    .event-plaque-card {
+      background: rgba(35, 11, 26, 0.75);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      position: relative;
     }
 
-    .event-card.featured-barat {
-      border-left: 5px solid var(--deep-burgundy);
+    .event-plaque-card.highlight-barat {
+      border-left: 5px solid var(--gold-primary);
+      background: linear-gradient(135deg, rgba(48, 14, 36, 0.85), rgba(28, 8, 20, 0.85));
     }
 
-    .event-card.featured-walima {
-      border-left: 5px solid #d4af37;
+    .event-plaque-card.highlight-walima {
+      border-left: 5px solid #e2ad36;
+      background: linear-gradient(135deg, rgba(44, 13, 33, 0.85), rgba(26, 7, 19, 0.85));
     }
 
-    .event-top-bar {
+    .event-card-top-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
     }
 
-    .event-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
+    .event-card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
       font-weight: 700;
-      color: var(--deep-burgundy);
+      color: #ffffff;
     }
 
-    .event-date-chip {
-      background: #fbf1f3;
-      color: var(--deep-burgundy);
+    .event-date-pill {
+      background: rgba(245, 215, 127, 0.15);
+      color: var(--gold-primary);
       font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 15px;
-      border: 1px solid rgba(217, 154, 167, 0.4);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-gold);
     }
 
-    .event-info-line {
+    .event-meta-line {
       display: flex;
       gap: 10px;
-      font-size: 12.5px;
-      color: var(--text-muted);
+      font-size: 13px;
+      color: var(--text-ivory);
       margin-bottom: 8px;
       line-height: 1.4;
     }
 
-    .event-info-line i {
-      color: var(--deep-burgundy);
+    .event-meta-line i {
+      color: var(--gold-primary);
       margin-top: 3px;
     }
 
-    .maps-btn {
+    .action-buttons-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .action-btn-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      background: var(--deep-burgundy);
-      color: #ffffff;
+      gap: 6px;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
-      padding: 12px;
+      padding: 11px;
       border-radius: 10px;
-      margin-top: 14px;
-      box-shadow: 0 4px 12px rgba(110, 28, 46, 0.25);
+      transition: all 0.2s ease;
     }
 
-    .rsvp-box {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 24px 18px;
-      border: 1px solid rgba(217, 154, 167, 0.45);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-      margin-top: 30px;
+    .action-btn-link.map-btn {
+      background: var(--gold-foil);
+      color: #2b1a01;
+      font-weight: 700;
     }
 
-    .form-group {
-      margin-bottom: 14px;
+    .action-btn-link.cal-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-gold);
+      color: var(--text-ivory);
     }
 
-    .form-group label {
+    /* =========================================================
+       6. ROYAL RSVP DISPATCH SUITE
+       ========================================================= */
+    .rsvp-imperial-box {
+      background: rgba(35, 11, 26, 0.85);
+      border-radius: 22px;
+      padding: 26px 20px;
+      border: 1.5px solid var(--border-gold);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      margin-top: 35px;
+    }
+
+    .form-entry-wrap {
+      margin-bottom: 15px;
+    }
+
+    .form-entry-wrap label {
       display: block;
+      font-family: 'Cinzel', serif;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--text-dark);
+      color: var(--gold-primary);
       margin-bottom: 6px;
     }
 
-    .form-group input, .form-group select {
+    .form-entry-wrap input, .form-entry-wrap select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #e5d2d5;
+      padding: 13px;
+      border: 1px solid var(--border-gold);
       border-radius: 10px;
       font-family: inherit;
       font-size: 13.5px;
-      color: var(--text-dark);
+      color: #ffffff;
       outline: none;
-      background: #fdfbfb;
+      background: rgba(18, 5, 14, 0.7);
     }
 
-    .whatsapp-btn {
+    .whatsapp-dispatch-btn {
       width: 100%;
       background: #25D366;
       color: #ffffff;
       border: none;
-      padding: 14px;
+      padding: 15px;
       border-radius: 10px;
       font-size: 14px;
       font-weight: 700;
@@ -641,39 +682,46 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
-      margin-top: 10px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+      margin-top: 12px;
+      transition: transform 0.2s ease;
     }
 
-    .family-close {
+    .whatsapp-dispatch-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Warm Family Homage */
+    .family-homage-signature {
       text-align: center;
-      margin-top: 35px;
+      margin-top: 40px;
       padding-top: 25px;
-      border-top: 1px dashed rgba(217, 154, 167, 0.6);
+      border-top: 1px dashed var(--border-gold);
     }
 
-    .family-close h6 {
+    .family-homage-signature h6 {
+      font-family: 'Cinzel', serif;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--deep-burgundy);
+      color: var(--gold-primary);
       margin-bottom: 6px;
     }
 
-    .family-close p {
+    .family-homage-signature p {
       font-size: 13.5px;
       font-weight: 600;
-      color: var(--text-dark);
+      color: var(--text-ivory);
       line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Continuous Falling Petals -->
-  <canvas id="ambientPetalsCanvas"></canvas>
+  <!-- Ambient Gold & Rose Stardust Canvas -->
+  <canvas id="ambientCosmicCanvas"></canvas>
 
-  <!-- SVG Definition for Exact Heart Masking -->
+  <!-- SVG Clip Mask for Authentic Heart Geometry -->
   <svg width="0" height="0">
     <defs>
       <clipPath id="heartClip" clipPathUnits="objectBoundingBox">
@@ -682,197 +730,215 @@
     </defs>
   </svg>
 
-  <button class="speaker-btn" id="audioToggleBtn" onclick="toggleWeddingAudio()">
-    <i class="fa-solid fa-volume-high"></i>
+  <!-- Audio Toggle -->
+  <button class="royal-audio-toggle" id="royalAudioBtn" onclick="toggleImperialSound()">
+    <i class="fa-solid fa-music"></i>
   </button>
-  <audio id="weddingTrack" loop preload="auto">
+  <audio id="imperialAudioTrack" loop preload="auto">
     <source src="music.mp3" type="audio/mp3">
     <source src="https://assets.mixkit.co/music/preview/mixkit-indian-traditional-instrumental-501.mp3" type="audio/mp3">
   </audio>
 
-  <div class="app-container">
+  <div class="imperial-stage">
 
-    <!-- 1. FULLSCREEN 3D DAMASK ENVELOPE (0:00 - 0:04 IN VIDEO) -->
-    <div id="envelope-screen">
-      <div class="envelope-pocket">
-        <div class="flap-triangle"></div>
-        <div class="pocket-triangles"></div>
+    <!-- 1. NOCTURNE IMPERIAL VELVET ENVELOPE OVERLAY -->
+    <div id="imperial-envelope-screen">
+      <div class="velvet-envelope-body">
+        <div class="velvet-flap-top"></div>
+        <div class="velvet-pocket-bottom"></div>
 
-        <div class="golden-wax-seal" onclick="handleWaxSealOpen()">
-          <span class="seal-txt-top">Tap To</span>
-          <span class="seal-txt-main">OPEN</span>
+        <!-- 3D Monogrammed Wax Seal -->
+        <div class="imperial-seal-btn" onclick="executeImperialSealOpen()">
+          <span class="seal-monogram-top">Tap To</span>
+          <span class="seal-monogram-center">S & A</span>
+          <span style="font-size: 7px; letter-spacing: 1px; color: #492e00; font-weight: 800;">OPEN</span>
         </div>
 
-        <div class="burst-flare"></div>
+        <div class="soft-aurora-glow"></div>
       </div>
-      <div class="envelope-caption">
-        <i class="fa-regular fa-envelope"></i> Tap the golden seal to open
+      <div class="envelope-invitation-subtext">
+        <i class="fa-regular fa-envelope"></i> Tap the royal seal to open
       </div>
     </div>
 
-    <!-- 2. CINEMATIC HERO ARCH PORTAL (0:05 - 0:09 IN VIDEO) -->
-    <div class="hero-arch-section">
-      <div class="royal-arch-glass">
-        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        <div class="ayah">"And We created you in pairs" (Surah An-Naba: 8)</div>
+    <!-- 2. IMPERIAL HERO GLASS ARCH PORTAL -->
+    <div class="imperial-hero-portal">
+      <div class="crystal-arch-portal">
+        <div class="bismillah-script">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="quran-ayah">"And We created you in pairs" (Surah An-Naba: 8)</div>
 
-        <div class="nana-badge">
-          <small>Under the affectionate blessings of</small>
+        <div class="grandfather-blessing-seal">
+          <small>Under the affectionate prayers of</small>
           <span>Sher Ali (Grandfather)</span>
         </div>
 
-        <div class="parents-line">With the divine blessings of Almighty Allah</div>
-        <div class="parents-name">Mr. & Mrs. Arshad Ali</div>
-        <div class="parents-line">request the honor of your presence to celebrate the wedding ceremony of their beloved son</div>
+        <div class="parents-proclamation">With the divine blessings of Almighty Allah</div>
+        <div class="parents-honored-names">Mr. & Mrs. Arshad Ali</div>
+        <div class="parents-proclamation">cordially invite you to celebrate the wedding ceremony of their beloved son</div>
 
-        <div class="couple-names-wrap">
-          <div class="couple-name">Muhammad Sadiq</div>
-          <div class="couple-and">&</div>
-          <div class="couple-name">Arooj Saher</div>
+        <div class="couple-grand-presentation">
+          <div class="couple-title-name">Muhammad Sadiq</div>
+          <div class="couple-monogram-symbol">&</div>
+          <div class="couple-title-name">Arooj Saher</div>
         </div>
       </div>
 
-      <div class="scroll-down-hint">
-        <span>Scroll</span>
+      <div class="bouncing-scroll-guide">
+        <span>Scroll Down</span>
         <i class="fa-solid fa-chevron-down"></i>
       </div>
     </div>
 
-    <!-- 3. SCROLLABLE REST OF THE INVITATION -->
-    <div class="content-stream">
+    <!-- 3. MAIN WEDDING ITINERARY & SCRATCH CARD -->
+    <div class="imperial-content-body">
 
-      <!-- Scratch to Reveal Exact Heart (0:10 - 0:13) -->
-      <div class="scratch-section-card">
-        <div class="scratch-title">Scratch to Reveal Date</div>
-        <div class="scratch-subtitle">Ungli ya mouse se dil ko scratch karein</div>
+      <!-- Scratch to Reveal Diamond Heart -->
+      <div class="diamond-scratch-card">
+        <div class="scratch-card-heading">Save The Dates</div>
+        <div class="scratch-card-prompt">Ungli ya mouse se dil ko scratch karein</div>
 
         <div class="heart-scratch-viewport">
-          <div class="date-revealed-layer">
+          <div class="revealed-heart-core">
             <i class="fa-solid fa-heart"></i>
-            <h4>Our forever begins</h4>
+            <h4>Our Forever Begins</h4>
             <p>24, 25 & 26 Nov 2026</p>
-            <p style="font-size: 10.5px; color: var(--deep-burgundy); margin-top: 3px;">Insha'Allah</p>
+            <p style="font-size: 10px; color: #8e1c36; margin-top: 3px;">Faisalabad, Pakistan</p>
           </div>
           <canvas id="scratchCanvas"></canvas>
         </div>
       </div>
 
-      <!-- Counting Down to Forever (0:14 - 0:16) -->
-      <div class="countdown-card">
-        <div class="countdown-title">Counting Down to Forever</div>
-        <div class="countdown-grid">
-          <div class="countdown-tile">
-            <div class="countdown-num" id="d_val">00</div>
-            <div class="countdown-lbl">Days</div>
+      <!-- Live Countdown Capsules -->
+      <div class="countdown-section-wrapper">
+        <div class="countdown-header-lbl">Celebrations Commence In</div>
+        <div class="countdown-capsules-grid">
+          <div class="countdown-capsule">
+            <div class="countdown-digit" id="d_val">00</div>
+            <div class="countdown-unit-tag">Days</div>
           </div>
-          <div class="countdown-tile">
-            <div class="countdown-num" id="h_val">00</div>
-            <div class="countdown-lbl">Hours</div>
+          <div class="countdown-capsule">
+            <div class="countdown-digit" id="h_val">00</div>
+            <div class="countdown-unit-tag">Hours</div>
           </div>
-          <div class="countdown-tile">
-            <div class="countdown-num" id="m_val">00</div>
-            <div class="countdown-lbl">Minutes</div>
+          <div class="countdown-capsule">
+            <div class="countdown-digit" id="m_val">00</div>
+            <div class="countdown-unit-tag">Mins</div>
           </div>
-          <div class="countdown-tile">
-            <div class="countdown-num" id="s_val">00</div>
-            <div class="countdown-lbl">Seconds</div>
+          <div class="countdown-capsule">
+            <div class="countdown-digit" id="s_val">00</div>
+            <div class="countdown-unit-tag">Secs</div>
           </div>
         </div>
       </div>
 
-      <!-- Program Timeline (0:16 - 0:21) -->
-      <div class="timeline-title">Program Timeline</div>
+      <!-- Program Timeline -->
+      <div class="timeline-grand-heading">Program Timeline</div>
 
       <!-- Mehndi -->
-      <div class="event-card">
-        <div class="event-top-bar">
-          <span class="event-name">Mehndi Night</span>
-          <span class="event-date-chip">24 Nov 2026</span>
+      <div class="event-plaque-card">
+        <div class="event-card-top-header">
+          <span class="event-card-name">Mehndi Night</span>
+          <span class="event-date-pill">24 Nov 2026</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-regular fa-clock"></i>
           <span>08:00 PM Onwards</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-solid fa-location-dot"></i>
           <span>MS SEO Agency, Faisalabad</span>
         </div>
-        <a class="maps-btn" href="https://maps.app.goo.gl/pQsDfjx8cx64wBdz7" target="_blank">
-          <i class="fa-solid fa-location-arrow"></i> View on Google Maps
-        </a>
+        <div class="action-buttons-group">
+          <a class="action-btn-link map-btn" href="https://maps.app.goo.gl/pQsDfjx8cx64wBdz7" target="_blank">
+            <i class="fa-solid fa-location-arrow"></i> Google Maps
+          </a>
+          <a class="action-btn-link cal-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Night+-+Muhammad+Sadiq+%26+Arooj+Saher&dates=20261124T150000Z/20261124T190000Z&details=Mehndi+Celebration+at+MS+SEO+Agency+Faisalabad&location=MS+SEO+Agency,+Faisalabad" target="_blank">
+            <i class="fa-regular fa-calendar-plus"></i> Add Calendar
+          </a>
+        </div>
       </div>
 
       <!-- Barat -->
-      <div class="event-card featured-barat">
-        <div class="event-top-bar">
-          <span class="event-name">Barat Ceremony</span>
-          <span class="event-date-chip">25 Nov 2026</span>
+      <div class="event-plaque-card highlight-barat">
+        <div class="event-card-top-header">
+          <span class="event-card-name">Barat Ceremony</span>
+          <span class="event-date-pill">25 Nov 2026</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-regular fa-clock"></i>
           <span>06:00 PM to 10:00 PM</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-solid fa-location-dot"></i>
           <span>Taj Mahal Marquee, Near GO Petrol Pump, Samundri Road, Faisalabad</span>
         </div>
-        <a class="maps-btn" href="https://maps.google.com/?q=Taj+Mahal+Marquee+Samundri+Road+Faisalabad" target="_blank">
-          <i class="fa-solid fa-location-arrow"></i> View on Google Maps
-        </a>
+        <div class="action-buttons-group">
+          <a class="action-btn-link map-btn" href="https://maps.google.com/?q=Taj+Mahal+Marquee+Samundri+Road+Faisalabad" target="_blank">
+            <i class="fa-solid fa-location-arrow"></i> Google Maps
+          </a>
+          <a class="action-btn-link cal-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Barat+Ceremony+-+Muhammad+Sadiq+%26+Arooj+Saher&dates=20261125T130000Z/20261125T170000Z&details=Barat+Ceremony+at+Taj+Mahal+Marquee+Samundri+Road+Faisalabad&location=Taj+Mahal+Marquee,+Samundri+Road,+Faisalabad" target="_blank">
+            <i class="fa-regular fa-calendar-plus"></i> Add Calendar
+          </a>
+        </div>
       </div>
 
       <!-- Walima -->
-      <div class="event-card featured-walima">
-        <div class="event-top-bar">
-          <span class="event-name">Walima Reception</span>
-          <span class="event-date-chip">26 Nov 2026</span>
+      <div class="event-plaque-card highlight-walima">
+        <div class="event-card-top-header">
+          <span class="event-card-name">Walima Reception</span>
+          <span class="event-date-pill">26 Nov 2026</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-regular fa-clock"></i>
           <span>06:00 PM to 10:00 PM</span>
         </div>
-        <div class="event-info-line">
+        <div class="event-meta-line">
           <i class="fa-solid fa-location-dot"></i>
           <span>Taj Mahal Marquee, Near GO Petrol Pump, Samundri Road, Faisalabad</span>
         </div>
-        <a class="maps-btn" href="https://maps.google.com/?q=Taj+Mahal+Marquee+Samundri+Road+Faisalabad" target="_blank">
-          <i class="fa-solid fa-location-arrow"></i> View on Google Maps
-        </a>
+        <div class="action-buttons-group">
+          <a class="action-btn-link map-btn" href="https://maps.google.com/?q=Taj+Mahal+Marquee+Samundri+Road+Faisalabad" target="_blank">
+            <i class="fa-solid fa-location-arrow"></i> Google Maps
+          </a>
+          <a class="action-btn-link cal-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Walima+Reception+-+Muhammad+Sadiq+%26+Arooj+Saher&dates=20261126T130000Z/20261126T170000Z&details=Walima+Reception+at+Taj+Mahal+Marquee+Samundri+Road+Faisalabad&location=Taj+Mahal+Marquee,+Samundri+Road,+Faisalabad" target="_blank">
+            <i class="fa-regular fa-calendar-plus"></i> Add Calendar
+          </a>
+        </div>
       </div>
 
-      <!-- Send a Message / RSVP (0:22 - 0:23) -->
-      <div class="rsvp-box">
-        <div class="timeline-title" style="margin-bottom: 14px;">Send a Message</div>
-        <form onsubmit="handleWhatsAppRSVP(event)">
-          <div class="form-group">
-            <label>Your Name</label>
-            <input type="text" id="rsvp_name" placeholder="Your full name" required>
+      <!-- RSVP Dispatch Suite -->
+      <div class="rsvp-imperial-box">
+        <div class="timeline-grand-heading" style="margin-bottom: 15px; font-size: 16px;">Confirm Your Presence</div>
+        <form onsubmit="handleImperialRSVPSubmit(event)">
+          <div class="form-entry-wrap">
+            <label>Your Full Name</label>
+            <input type="text" id="guest_name" placeholder="Tariq Mehmood" required>
           </div>
-          <div class="form-group">
-            <label>Attending Guests</label>
-            <select id="rsvp_count">
+          <div class="form-entry-wrap">
+            <label>Accompanying Guests</label>
+            <select id="guest_count">
               <option value="1 Person">1 Person</option>
               <option value="2 Persons" selected>2 Persons</option>
               <option value="3 Persons">3 Persons</option>
-              <option value="Family Members">With Family</option>
+              <option value="With Family">With Entire Family</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Attending Events</label>
-            <select id="rsvp_events">
+          <div class="form-entry-wrap">
+            <label>Ceremonies Attending</label>
+            <select id="events_selected">
               <option value="All Functions (Mehndi, Barat, Walima)">All Functions (Mehndi, Barat, Walima)</option>
-              <option value="Barat & Walima">Barat & Walima</option>
+              <option value="Barat & Walima">Barat & Walima Only</option>
               <option value="Walima Reception Only">Walima Reception Only</option>
             </select>
           </div>
-          <button type="submit" class="whatsapp-btn">
-            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Send Message
+          <button type="submit" class="whatsapp-dispatch-btn">
+            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Confirm RSVP via WhatsApp
           </button>
         </form>
       </div>
 
-      <!-- Family Footer -->
-      <div class="family-close">
+      <!-- Warm Family Homage -->
+      <div class="family-homage-signature">
         <h6>Awaiting Your Warm Presence</h6>
         <p>
           Aqib Ali & Mrs. Aqib<br>
@@ -885,143 +951,148 @@
   </div>
 
   <script>
-    // 1. Continuous Background Falling Petals Animation
-    const pCanvas = document.getElementById('ambientPetalsCanvas');
-    const pCtx = pCanvas.getContext('2d');
-    let pWidth = pCanvas.width = window.innerWidth;
-    let pHeight = pCanvas.height = window.innerHeight;
+    // 1. Continuous Floating Cosmic Stardust & Rose Petal Physics
+    const cCanvas = document.getElementById('ambientCosmicCanvas');
+    const cCtx = cCanvas.getContext('2d');
+    let cW = cCanvas.width = window.innerWidth;
+    let cH = cCanvas.height = window.innerHeight;
 
     window.addEventListener('resize', () => {
-      pWidth = pCanvas.width = window.innerWidth;
-      pHeight = pCanvas.height = window.innerHeight;
+      cW = cCanvas.width = window.innerWidth;
+      cH = cCanvas.height = window.innerHeight;
     });
 
-    const totalPetals = 22;
-    const petalsList = [];
-    for (let i = 0; i < totalPetals; i++) {
-      petalsList.push({
-        x: Math.random() * pWidth,
-        y: Math.random() * pHeight,
-        size: Math.random() * 5 + 4,
-        speedY: Math.random() * 0.8 + 0.4,
-        speedX: Math.random() * 0.4 - 0.2,
+    const particles = [];
+    const particleCount = 28;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * cW,
+        y: Math.random() * cH,
+        size: Math.random() * 4.5 + 2,
+        speedY: Math.random() * 0.7 + 0.35,
+        speedX: Math.random() * 0.5 - 0.25,
         tilt: Math.random() * 10,
-        tiltInc: Math.random() * 0.03 + 0.01,
-        color: Math.random() > 0.4 ? 'rgba(217, 154, 167, 0.4)' : 'rgba(184, 117, 133, 0.3)'
+        tiltSpeed: Math.random() * 0.03 + 0.01,
+        isGold: Math.random() > 0.55
       });
     }
 
-    function animatePetals() {
-      pCtx.clearRect(0, 0, pWidth, pHeight);
-      for (let i = 0; i < totalPetals; i++) {
-        const p = petalsList[i];
-        pCtx.beginPath();
-        pCtx.fillStyle = p.color;
-        pCtx.ellipse(p.x, p.y, p.size, p.size * 1.6, p.tilt, 0, Math.PI * 2);
-        pCtx.fill();
+    function renderCosmicParticles() {
+      cCtx.clearRect(0, 0, cW, cH);
+      for (let i = 0; i < particleCount; i++) {
+        const p = particles[i];
+        cCtx.beginPath();
+        if (p.isGold) {
+          cCtx.fillStyle = 'rgba(245, 215, 127, 0.45)';
+          cCtx.arc(p.x, p.y, p.size * 0.7, 0, Math.PI * 2);
+        } else {
+          cCtx.fillStyle = 'rgba(184, 98, 123, 0.38)';
+          cCtx.ellipse(p.x, p.y, p.size, p.size * 1.6, p.tilt, 0, Math.PI * 2);
+        }
+        cCtx.fill();
 
         p.y += p.speedY;
-        p.x += Math.sin(p.tilt) * 0.6;
-        p.tilt += p.tiltInc;
+        p.x += Math.sin(p.tilt) * 0.5;
+        p.tilt += p.tiltSpeed;
 
-        if (p.y > pHeight + 20) {
+        if (p.y > cH + 20) {
           p.y = -20;
-          p.x = Math.random() * pWidth;
+          p.x = Math.random() * cW;
         }
       }
-      requestAnimationFrame(animatePetals);
+      requestAnimationFrame(renderCosmicParticles);
     }
-    animatePetals();
+    renderCosmicParticles();
 
-    // 2. Audio Control & Soft Shimmer Trigger
-    const track = document.getElementById('weddingTrack');
-    const speakerBtn = document.getElementById('audioToggleBtn');
-    let isPlaying = false;
+    // 2. Imperial Sound & Soft Seal Open Trigger
+    const imperialTrack = document.getElementById('imperialAudioTrack');
+    const audioBtn = document.getElementById('royalAudioBtn');
+    let soundActive = false;
 
-    function handleWaxSealOpen() {
-      const envelopeScreen = document.getElementById('envelope-screen');
-      envelopeScreen.classList.add('unseal');
+    function executeImperialSealOpen() {
+      const envelope = document.getElementById('imperial-envelope-screen');
+      envelope.classList.add('opened');
 
-      track.play().then(() => {
-        isPlaying = true;
+      imperialTrack.play().then(() => {
+        soundActive = true;
+        audioBtn.classList.add('active');
       }).catch(e => console.log(e));
 
-      // Soft confetti burst (Controlled)
+      // Controlled Soft Shimmer Sparkle
       confetti({
-        particleCount: 35,
-        spread: 60,
+        particleCount: 40,
+        spread: 65,
         origin: { y: 0.5 }
       });
 
       setTimeout(() => {
-        envelopeScreen.classList.add('opened');
-      }, 900);
+        envelope.classList.add('dismissed');
+      }, 950);
     }
 
-    function toggleWeddingAudio() {
-      if (isPlaying) {
-        track.pause();
-        speakerBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-        isPlaying = false;
+    function toggleImperialSound() {
+      if (soundActive) {
+        imperialTrack.pause();
+        audioBtn.classList.remove('active');
+        soundActive = false;
       } else {
-        track.play().then(() => {
-          speakerBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-          isPlaying = true;
+        imperialTrack.play().then(() => {
+          audioBtn.classList.add('active');
+          soundActive = true;
         }).catch(e => console.log(e));
       }
     }
 
-    // 3. Countdown Logic (Mehndi: 24 Nov 2026, 08:00 PM)
-    const targetDate = new Date("November 24, 2026 20:00:00").getTime();
+    // 3. Countdown Clock (Target: 24 Nov 2026, 08:00 PM PKT)
+    const eventEpoch = new Date("November 24, 2026 20:00:00").getTime();
     setInterval(function() {
       const now = new Date().getTime();
-      const diff = targetDate - now;
+      const delta = eventEpoch - now;
 
-      if (diff > 0) {
-        document.getElementById("d_val").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-        document.getElementById("h_val").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-        document.getElementById("m_val").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-        document.getElementById("s_val").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+      if (delta > 0) {
+        document.getElementById("d_val").innerText = Math.floor(delta / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("h_val").innerText = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("m_val").innerText = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("s_val").innerText = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
       }
     }, 1000);
 
-    // 4. Scratch Heart Setup (Perfect Center Text Position)
-    const canvas = document.getElementById('scratchCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 220;
-    canvas.height = 200;
+    // 4. Scratch Heart Setup (Perfect Center Typography)
+    const sCanvas = document.getElementById('scratchCanvas');
+    const sCtx = sCanvas.getContext('2d');
+    sCanvas.width = 220;
+    sCanvas.height = 200;
 
-    function initGlitterHeart() {
-      ctx.fillStyle = '#d99aa7';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function initDiamondHeart() {
+      sCtx.fillStyle = '#b87585';
+      sCtx.fillRect(0, 0, sCanvas.width, sCanvas.height);
 
-      ctx.fillStyle = '#6e1c2e';
-      ctx.font = 'bold 12.5px Montserrat';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      // Exactly in the broad center of the heart
-      ctx.fillText('SCRATCH HERE ❤', 110, 85);
+      sCtx.fillStyle = '#260817';
+      sCtx.font = 'bold 12px Montserrat';
+      sCtx.textAlign = 'center';
+      sCtx.textBaseline = 'middle';
+      sCtx.fillText('SCRATCH HERE ❤', 110, 85);
     }
-    initGlitterHeart();
+    initDiamondHeart();
 
     let scratching = false;
     let scratchedUnits = 0;
-    let confettiFired = false;
+    let celebrated = false;
 
-    function doScratch(e) {
+    function processScratch(e) {
       if (!scratching) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+      const bRect = sCanvas.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - bRect.left;
+      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - bRect.top;
 
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
-      ctx.fill();
+      sCtx.globalCompositeOperation = 'destination-out';
+      sCtx.beginPath();
+      sCtx.arc(x, y, 20, 0, Math.PI * 2);
+      sCtx.fill();
 
       scratchedUnits++;
-      if (scratchedUnits > 28 && !confettiFired) {
-        confettiFired = true;
+      if (scratchedUnits > 26 && !celebrated) {
+        celebrated = true;
         confetti({
           particleCount: 50,
           spread: 70,
@@ -1030,24 +1101,24 @@
       }
     }
 
-    canvas.addEventListener('mousedown', () => scratching = true);
-    canvas.addEventListener('mouseup', () => scratching = false);
-    canvas.addEventListener('mousemove', doScratch);
+    sCanvas.addEventListener('mousedown', () => scratching = true);
+    sCanvas.addEventListener('mouseup', () => scratching = false);
+    sCanvas.addEventListener('mousemove', processScratch);
 
-    canvas.addEventListener('touchstart', (e) => { scratching = true; doScratch(e); });
-    canvas.addEventListener('touchend', () => scratching = false);
-    canvas.addEventListener('touchmove', (e) => { doScratch(e); e.preventDefault(); });
+    sCanvas.addEventListener('touchstart', (e) => { scratching = true; processScratch(e); });
+    sCanvas.addEventListener('touchend', () => scratching = false);
+    sCanvas.addEventListener('touchmove', (e) => { processScratch(e); e.preventDefault(); });
 
-    // 5. WhatsApp RSVP Send
-    function handleWhatsAppRSVP(e) {
+    // 5. WhatsApp RSVP Dispatch
+    function handleImperialRSVPSubmit(e) {
       e.preventDefault();
       const phone = "923107959373";
-      const name = document.getElementById('rsvp_name').value;
-      const count = document.getElementById('rsvp_count').value;
-      const events = document.getElementById('rsvp_events').value;
+      const name = document.getElementById('guest_name').value;
+      const guests = document.getElementById('guest_count').value;
+      const ceremonies = document.getElementById('events_selected').value;
 
-      const text = `Assalam-o-Alaikum!%0A%0A*Wedding Confirmation*%0A*Guest Name:* ${encodeURIComponent(name)}%0A*Guests Count:* ${encodeURIComponent(count)}%0A*Events Attending:* ${encodeURIComponent(events)}%0A%0AInsha'Allah hum zaroor shareek honge!`;
-      window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+      const txt = `Assalam-o-Alaikum!%0A%0A*Royal Wedding RSVP Confirmation*%0A*Guest Name:* ${encodeURIComponent(name)}%0A*Accompanying Guests:* ${encodeURIComponent(guests)}%0A*Functions Attending:* ${encodeURIComponent(ceremonies)}%0A%0AInsha'Allah hum zaroor shareek honge!`;
+      window.open(`https://wa.me/${phone}?text=${txt}`, '_blank');
     }
   </script>
 </body>
