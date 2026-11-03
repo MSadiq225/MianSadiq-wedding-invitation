@@ -43,7 +43,7 @@
       overflow-x: hidden;
     }
 
-    /* Fixed Canvas for Continuous Background Animation */
+    /* Fixed Canvas for Continuous Background Petals */
     #ambientPetalsCanvas {
       position: fixed;
       top: 0;
@@ -54,7 +54,7 @@
       z-index: 40;
     }
 
-    /* App Frame (Looks like clean mobile on desktop, native on mobile) */
+    /* Responsive Mobile Frame */
     .app-container {
       width: 100%;
       max-width: 440px;
@@ -65,7 +65,7 @@
       overflow-x: hidden;
     }
 
-    /* Audio Speaker Toggle */
+    /* Floating Speaker/Music Button */
     .speaker-btn {
       position: fixed;
       top: 16px;
@@ -109,7 +109,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      transition: opacity 0.8s ease 1.1s, visibility 0.8s ease 1.1s;
+      transition: opacity 0.7s ease 0.9s, visibility 0.7s ease 0.9s;
     }
 
     #envelope-screen.opened {
@@ -217,24 +217,31 @@
       font-weight: 700;
     }
 
+    /* Soft Subtle Shimmer (Aankhon ko chubhe bina) */
     .burst-flare {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(255, 255, 230, 1) 0%, rgba(255, 215, 120, 0.7) 40%, transparent 70%);
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255, 235, 160, 0.45) 0%, rgba(212, 175, 55, 0.15) 50%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
       z-index: 15;
       opacity: 0;
-      transition: transform 0.6s ease 0.15s, opacity 0.6s ease 0.25s;
+      transition: transform 0.45s ease-out, opacity 0.4s ease-out;
     }
 
     #envelope-screen.unseal .burst-flare {
-      transform: translate(-50%, -50%) scale(3);
-      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.4);
+      opacity: 0.6;
+      animation: fadeOutShimmer 0.4s ease-out forwards 0.15s;
+    }
+
+    @keyframes fadeOutShimmer {
+      0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.4); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
     }
 
     /* =======================================================
@@ -358,7 +365,7 @@
     }
 
     /* =======================================================
-       3. EXACT HEART SHAPED SCRATCH (0:10 - 0:13 IN VIDEO)
+       3. EXACT HEART SHAPED SCRATCH (CENTERED TEXT FIX)
        ======================================================= */
     .content-stream {
       padding: 30px 18px 80px 18px;
@@ -407,22 +414,25 @@
       box-shadow: 0 8px 25px rgba(217, 154, 167, 0.3);
     }
 
+    /* Revealed Layer - Vertically and Horizontally Centered */
     .date-revealed-layer {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #fff8f9;
-      padding: 15px;
+      padding: 0 20px 20px 20px;
       text-align: center;
+      box-sizing: border-box;
     }
 
     .date-revealed-layer i {
       color: var(--deep-burgundy);
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 4px;
     }
 
@@ -431,6 +441,7 @@
       font-size: 17px;
       color: var(--deep-burgundy);
       font-weight: 700;
+      line-height: 1.2;
     }
 
     .date-revealed-layer p {
@@ -922,7 +933,7 @@
     }
     animatePetals();
 
-    // 2. Audio Control
+    // 2. Audio Control & Soft Shimmer Trigger
     const track = document.getElementById('weddingTrack');
     const speakerBtn = document.getElementById('audioToggleBtn');
     let isPlaying = false;
@@ -935,15 +946,16 @@
         isPlaying = true;
       }).catch(e => console.log(e));
 
+      // Soft confetti burst (Controlled)
       confetti({
-        particleCount: 75,
-        spread: 80,
+        particleCount: 35,
+        spread: 60,
         origin: { y: 0.5 }
       });
 
       setTimeout(() => {
         envelopeScreen.classList.add('opened');
-      }, 1100);
+      }, 900);
     }
 
     function toggleWeddingAudio() {
@@ -973,7 +985,7 @@
       }
     }, 1000);
 
-    // 4. Scratch Heart Setup
+    // 4. Scratch Heart Setup (Perfect Center Text Position)
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = 220;
@@ -986,7 +998,9 @@
       ctx.fillStyle = '#6e1c2e';
       ctx.font = 'bold 12.5px Montserrat';
       ctx.textAlign = 'center';
-      ctx.fillText('SCRATCH HERE ❤', 110, 105);
+      ctx.textBaseline = 'middle';
+      // Exactly in the broad center of the heart
+      ctx.fillText('SCRATCH HERE ❤', 110, 85);
     }
     initGlitterHeart();
 
@@ -1009,8 +1023,8 @@
       if (scratchedUnits > 28 && !confettiFired) {
         confettiFired = true;
         confetti({
-          particleCount: 70,
-          spread: 75,
+          particleCount: 50,
+          spread: 70,
           origin: { y: 0.6 }
         });
       }
